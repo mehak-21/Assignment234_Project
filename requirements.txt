@@ -11,3 +11,4 @@ drf-spectacular[sidecar]
 pillow
 django-allauth
 mysqlclient
+weasyprint

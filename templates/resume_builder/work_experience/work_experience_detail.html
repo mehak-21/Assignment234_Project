@@ -8,6 +8,13 @@ detail Work Experience—Resume Builder
 {% endblock %}
 
 {% block content %}
+<div class="container mt-4">
+  <h2>{{ object.position }} at {{ object.company_name }}</h2>
+  <p><strong>Duration:</strong> {{ object.start_date }} to {{ object.end_date }}</p>
+  <p><strong>Description:</strong> {{ object.description }}</p>
+  <a href="{% url 'workexperience-update' object.pk %}" class="btn btn-warning">Edit</a>
+  <a href="{% url 'workexperience-delete' object.pk %}" class="btn btn-danger">Delete</a>
+</div>
 <div class="container">
   <h1>Implement Your Logic here</h1>
   <p>work experience detail</p>
