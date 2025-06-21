@@ -239,4 +239,4 @@ EMAIL_HOST_PASSWORD = '588663c1d79800'
 EMAIL_PORT = '2525'
 
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-ACCOUNT_LOGIN_REDIRECT_URL = "api/v1/swagger/"
+# ACCOUNT_LOGIN_REDIRECT_URL = "api/v1/swagger/"
