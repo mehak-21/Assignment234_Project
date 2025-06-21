@@ -1,8 +1,10 @@
 # Python
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
-from resume_builder.models import WorkExperience
+from resume_builder.models import WorkExperience, Resume
 from resume_builder.forms import WorkExperienceForm
 
 class WorkExperienceListView(LoginRequiredMixin, ListView):
@@ -51,3 +53,28 @@ class WorkExperienceDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailVi
 
     def test_func(self):
         return self.get_object().resume.user == self.request.user
+
+# views.py
+from django.http import HttpResponse
+from django.template.loader import get_template
+import weasyprint
+
+@login_required
+def download_resume_pdf(request, resume_id):
+    resume = get_object_or_404(Resume, id=resume_id, user=request.user)
+    template = get_template('resume_builder/resume_templates/classic.html')  # or use resume.template to choose dynamically
+
+    html = template.render({'resume': resume})
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="{resume.slug}.pdf"'
+
+    weasyprint.HTML(string=html).write_pdf(response)
+    return response
+
+
+def select_template():
+    return None
+
+
+def download_resume():
+    return None
