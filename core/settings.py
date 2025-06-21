@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'jobs.apps.JobsConfig',
     'recommendations.apps.RecommendationsConfig',
     'resume_builder.apps.ResumeBuilderConfig',
+    'dashboard.apps.DashboardConfig',
 ]
 
 MIDDLEWARE = [
@@ -206,9 +207,22 @@ SIMPLE_JWT = {
 AUTHENTICATION_BACKENDS = [
     # Needed to login by username in Django admin, regardless of `allauth`
     'django.contrib.auth.backends.ModelBackend',
-
     # `allauth` specific authentication methods, such as login by email
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
+LOGIN_URL = '/web/accounts/login/'
+LOGIN_REDIRECT_URL = '/'
+
+ACCOUNT_FORMS = {
+    'signup': 'accounts.forms.CustomSignupForm',
+}
+
+# Looking to send emails in production? Check out our Email API/SMTP product!
+EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
+EMAIL_HOST_USER = 'f0cb0b9d536e42'
+EMAIL_HOST_PASSWORD = '588663c1d79800'
+EMAIL_PORT = '2525'
+
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 ACCOUNT_LOGIN_REDIRECT_URL = "api/v1/swagger/"
