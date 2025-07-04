@@ -8,6 +8,9 @@ from resume_builder.api.api import (
     AwardViewSet, LanguageViewSet
 )
 
+from . import views
+
+# DRF Router setup
 router = DefaultRouter()
 router.register(r'resume-templates', ResumeTemplateViewSet)
 router.register(r'resumes', ResumeViewSet)
@@ -22,5 +25,16 @@ router.register(r'awards', AwardViewSet)
 router.register(r'languages', LanguageViewSet)
 
 urlpatterns = [
-    path('', include(router.urls)),
+    # REST API endpoints
+    path('api/', include(router.urls)),
+
+    # Allauth user authentication
+    path('accounts/', include('allauth.urls')),
+
+    # Work Experience CRUD
+    path('workexperience/', views.workexperience_list, name='workexperience_list'),
+    path('workexperience/create/', views.create_workexperience, name='create_workexperience'),
+    path('workexperience/<int:pk>/', views.workexperience_detail, name='workexperience_detail'),
+    path('workexperience/<int:pk>/edit/', views.update_workexperience, name='update_workexperience'),
+    path('workexperience/<int:pk>/delete/', views.delete_workexperience, name='delete_workexperience'),
 ]
