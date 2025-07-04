@@ -1,5 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
+
+from resume_builder import admin
 from resume_builder.models import WorkExperience
 from resume_builder.forms import WorkExperienceForm
 
@@ -45,3 +47,9 @@ def delete_workexperience(request, pk):
         item.delete()
         return redirect('workexperience_list')
     return render(request, 'resume_builder/workexperience_confirm_delete.html', {'item': item})
+
+@admin.register(WorkExperience)
+class WorkExperienceAdmin(admin.ModelAdmin):
+    list_display = ('job_title', 'company_name', 'start_date', 'end_date', 'user')
+    search_fields = ('job_title', 'company_name')
+    list_filter = ('start_date', 'end_date')
